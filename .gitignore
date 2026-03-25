@@ -1,4 +1,5 @@
 # Root-level ignores
+/.playwright-cli/
 /main.py
 /uv.lock
 /flash-ui-canvas.zip
