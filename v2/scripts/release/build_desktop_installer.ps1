@@ -78,6 +78,13 @@ if (-not (Test-Path $SourceBundleRoot)) {
 
 Copy-Item -Recurse -Force (Join-Path $SourceBundleRoot "*") $BundleOutput
 
+$NsisOutput = Join-Path $BundleOutput "nsis"
+if (Test-Path $NsisOutput) {
+  Get-ChildItem -Path $NsisOutput -File | Where-Object {
+    $_.Name -like "RPA Flow Desktop_*_x64-setup.exe" -and $_.Name -notlike "RPA Flow Desktop_${Version}_x64-setup.exe"
+  } | Remove-Item -Force
+}
+
 $artifacts = Get-ChildItem -Path $BundleOutput -Recurse -File | ForEach-Object {
   $relativePath = $_.FullName.Substring($BundleOutput.Length).TrimStart('\', '/').Replace('\', '/')
   [ordered]@{
