@@ -1,6 +1,6 @@
 # RPA Flow V2
 
-[English](./README.md) | [中文说明](./README_ZH.md)
+[English](./README.md) | [Chinese](./README_ZH.md)
 
 [![CI](https://img.shields.io/github/actions/workflow/status/Ethan-iopasd/rpa-browser-extension/v2-ci.yml?branch=main&label=ci)](https://github.com/Ethan-iopasd/rpa-browser-extension/actions/workflows/v2-ci.yml)
 [![License](https://img.shields.io/github/license/Ethan-iopasd/rpa-browser-extension)](./LICENSE)
@@ -23,7 +23,6 @@ The main codebase lives in [`v2`](./v2). This repository combines a browser reco
 
 - Experimental V2 workspace
 - Windows-first developer experience
-- Primary long-form docs are currently in Chinese
 - Best suited for exploration, internal tooling, and further modernization
 
 ![img.png](img.png)
@@ -51,10 +50,10 @@ flowchart LR
 | `v2/apps/desktop` | Tauri desktop shell |
 | `v2/services/api` | FastAPI local control plane |
 | `v2/packages/flow-schema` | Shared DSL schema and generated types |
-| `v2/docs` | Product, architecture, and release docs |
 | `v2/tests` | Python baseline and contract tests |
+| `v2/scripts` | Build, release, and utility scripts |
 
-## Quick Start
+## Local Startup
 
 ### 1. Install dependencies
 
@@ -90,15 +89,15 @@ cd v2\apps\agent
 rpa-agent --flow ..\..\packages\flow-schema\examples\minimal.flow.json
 ```
 
-## Packaging And Releases
+### 5. Optional: load the recorder extension
 
-For source users and maintainers, start here:
+1. Open `chrome://extensions/`
+2. Enable developer mode
+3. Load `v2/apps/recorder-extension` as an unpacked extension
 
-- [`v2/docs/GITHUB_RELEASE_GUIDE.md`](./v2/docs/GITHUB_RELEASE_GUIDE.md) - recommended open-source release flow
-- [`v2/scripts/release/README.md`](./v2/scripts/release/README.md) - build commands and artifact locations
-- [`v2/docs/DESKTOP_RELEASE_CHECKLIST_ZH.md`](./v2/docs/DESKTOP_RELEASE_CHECKLIST_ZH.md) - desktop release checklist
+## Desktop Build
 
-Typical desktop build commands:
+### Standard desktop build
 
 ```powershell
 cd v2
@@ -106,19 +105,67 @@ pnpm release:desktop:sidecar
 pnpm release:desktop
 ```
 
-Release artifacts are generated under `v2/dist/desktop/<version>/`.
+### Fast build
 
-## Documentation Map
+```powershell
+cd v2
+pnpm release:desktop:fast
+```
 
-- [`v2/README.md`](./v2/README.md) - workspace overview and detailed developer commands
-- [`v2/docs/LOCAL_BOOTSTRAP.md`](./v2/docs/LOCAL_BOOTSTRAP.md) - local environment bootstrap
-- [`v2/docs/DESKTOP_SIDECAR_PACKAGING_ZH.md`](./v2/docs/DESKTOP_SIDECAR_PACKAGING_ZH.md) - desktop sidecar packaging notes
-- [`v2/docs/NATIVE_DESKTOP_PICKER_IMPLEMENTATION_ZH.md`](./v2/docs/NATIVE_DESKTOP_PICKER_IMPLEMENTATION_ZH.md) - native picker implementation details
-- [`v2/docs/IFRAME_PICKER_OPEN_SOURCE_BENCHMARK_ZH.md`](./v2/docs/IFRAME_PICKER_OPEN_SOURCE_BENCHMARK_ZH.md) - iframe picker benchmark notes
+### Manifest-only refresh
 
-## Documentation Language
+```powershell
+cd v2
+pnpm release:desktop:manifest
+```
 
-Most deep-dive product and engineering documents in this repository are currently written in Chinese. If you want the most complete implementation notes, start with [`v2/README.md`](./v2/README.md) and the documents under [`v2/docs`](./v2/docs).
+### Output locations
+
+- Installer bundle: `v2/dist/desktop/<version>/bundle`
+- Release manifest: `v2/dist/desktop/<version>/desktop-release-manifest.json`
+- Windows setup file: `v2/dist/desktop/<version>/bundle/nsis/RPA Flow Desktop_<version>_x64-setup.exe`
+
+## Release Flow
+
+### 1. Verify the workspace
+
+```powershell
+cd v2
+pnpm verify
+```
+
+### 2. Build release artifacts
+
+```powershell
+cd v2
+pnpm release:desktop:sidecar
+pnpm release:desktop
+```
+
+### 3. Create and push a tag
+
+```powershell
+git checkout main
+git pull --ff-only
+git tag -a v0.1.0 -m "v0.1.0"
+git push origin main --tags
+```
+
+### 4. Publish the GitHub release
+
+Upload at least these assets:
+
+- `RPA Flow Desktop_<version>_x64-setup.exe`
+- `desktop-release-manifest.json`
+
+Recommended tag style:
+
+- Stable: `vX.Y.Z`
+- Pre-release: `vX.Y.Z-beta.N`
+
+## Workspace Guide
+
+For the most complete workspace-level commands and module overview, read [`v2/README.md`](./v2/README.md).
 
 ## License
 

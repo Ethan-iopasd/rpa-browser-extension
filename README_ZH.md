@@ -1,6 +1,6 @@
 # RPA Flow V2
 
-[English](./README.md) | [中文说明](./README_ZH.md)
+[English](./README.md) | [Chinese](./README_ZH.md)
 
 [![CI](https://img.shields.io/github/actions/workflow/status/Ethan-iopasd/rpa-browser-extension/v2-ci.yml?branch=main&label=ci)](https://github.com/Ethan-iopasd/rpa-browser-extension/actions/workflows/v2-ci.yml)
 [![License](https://img.shields.io/github/license/Ethan-iopasd/rpa-browser-extension)](./LICENSE)
@@ -8,11 +8,11 @@
 
 一个用于录制、设计、执行和打包浏览器自动化流程的开源 RPA 工作区。
 
-主代码位于 [`v2`](./v2)。这个仓库并不只是单独的浏览器扩展，而是一套完整的本地自动化平台，包含浏览器录制扩展、React 流程设计器、Python 执行代理、FastAPI 控制面，以及 Tauri 桌面壳。
+主代码位于 [`v2`](./v2)。这个仓库并不只是单独的浏览器扩展，而是一套完整的本地自动化平台，包含浏览器录制扩展、React 流程设计器、Python 执行代理、FastAPI 控制面，以及 Tauri 桌面端。
 
 ## 项目概览
 
-- 用 Chrome 扩展录制网页操作，并回填到流程设计器。
+- 用 Chrome 扩展录制网页操作，并回填到设计器。
 - 用可视化画布编排自动化流程，并复用共享 Schema。
 - 通过 Python Agent 和 Playwright 执行浏览器自动化。
 - 用 FastAPI 提供本地控制面和运行接口。
@@ -23,7 +23,6 @@
 
 - 这是一个实验性的 V2 工作区
 - 当前开发体验以 Windows 为主
-- 更深入的产品和工程文档大多仍是中文
 - 适合继续演进、重构和二次开发
 
 ![img.png](img.png)
@@ -51,10 +50,10 @@ flowchart LR
 | `v2/apps/desktop` | Tauri 桌面端 |
 | `v2/services/api` | FastAPI 本地控制面 |
 | `v2/packages/flow-schema` | 共享 DSL Schema 与生成类型 |
-| `v2/docs` | 产品、架构、发布相关文档 |
 | `v2/tests` | Python 基线与契约测试 |
+| `v2/scripts` | 构建、发布和工具脚本 |
 
-## 快速开始
+## 本地启动
 
 ### 1. 安装依赖
 
@@ -90,15 +89,15 @@ cd v2\apps\agent
 rpa-agent --flow ..\..\packages\flow-schema\examples\minimal.flow.json
 ```
 
-## 打包与发布
+### 5. 可选：加载录制扩展
 
-面向开源使用者和维护者，建议先看这些文档：
+1. 打开 `chrome://extensions/`
+2. 开启开发者模式
+3. 加载 `v2/apps/recorder-extension`
 
-- [`v2/docs/GITHUB_RELEASE_GUIDE.md`](./v2/docs/GITHUB_RELEASE_GUIDE.md) - GitHub Release 发布流程
-- [`v2/scripts/release/README.md`](./v2/scripts/release/README.md) - 构建命令和产物位置
-- [`v2/docs/DESKTOP_RELEASE_CHECKLIST_ZH.md`](./v2/docs/DESKTOP_RELEASE_CHECKLIST_ZH.md) - 桌面版发布检查清单
+## 桌面打包
 
-典型的桌面版构建命令：
+### 标准打包
 
 ```powershell
 cd v2
@@ -106,19 +105,67 @@ pnpm release:desktop:sidecar
 pnpm release:desktop
 ```
 
-构建产物默认位于 `v2/dist/desktop/<version>/`。
+### 快速打包
 
-## 文档导航
+```powershell
+cd v2
+pnpm release:desktop:fast
+```
 
-- [`v2/README.md`](./v2/README.md) - 工作区总说明和详细命令
-- [`v2/docs/LOCAL_BOOTSTRAP.md`](./v2/docs/LOCAL_BOOTSTRAP.md) - 本地环境初始化
-- [`v2/docs/DESKTOP_SIDECAR_PACKAGING_ZH.md`](./v2/docs/DESKTOP_SIDECAR_PACKAGING_ZH.md) - 桌面 sidecar 打包说明
-- [`v2/docs/NATIVE_DESKTOP_PICKER_IMPLEMENTATION_ZH.md`](./v2/docs/NATIVE_DESKTOP_PICKER_IMPLEMENTATION_ZH.md) - 原生拾取器实现说明
-- [`v2/docs/IFRAME_PICKER_OPEN_SOURCE_BENCHMARK_ZH.md`](./v2/docs/IFRAME_PICKER_OPEN_SOURCE_BENCHMARK_ZH.md) - iframe picker 基准分析
+### 仅刷新发布清单
 
-## 补充说明
+```powershell
+cd v2
+pnpm release:desktop:manifest
+```
 
-如果你想快速理解这个项目，建议先看根目录英文首页，再深入阅读 [`v2/README.md`](./v2/README.md) 和 [`v2/docs`](./v2/docs) 下的文档。当前仓库的技术组合包括 React、FastAPI、Python、Playwright、Tauri 和浏览器扩展，整体上更像一套完整的 RPA 平台原型，而不是单一插件项目。
+### 产物位置
+
+- 安装包目录：`v2/dist/desktop/<version>/bundle`
+- 发布清单：`v2/dist/desktop/<version>/desktop-release-manifest.json`
+- Windows 安装包：`v2/dist/desktop/<version>/bundle/nsis/RPA Flow Desktop_<version>_x64-setup.exe`
+
+## 发布流程
+
+### 1. 执行校验
+
+```powershell
+cd v2
+pnpm verify
+```
+
+### 2. 构建发布产物
+
+```powershell
+cd v2
+pnpm release:desktop:sidecar
+pnpm release:desktop
+```
+
+### 3. 创建并推送标签
+
+```powershell
+git checkout main
+git pull --ff-only
+git tag -a v0.1.0 -m "v0.1.0"
+git push origin main --tags
+```
+
+### 4. 发布 GitHub Release
+
+至少上传这两个文件：
+
+- `RPA Flow Desktop_<version>_x64-setup.exe`
+- `desktop-release-manifest.json`
+
+推荐标签格式：
+
+- 正式版：`vX.Y.Z`
+- 预发布：`vX.Y.Z-beta.N`
+
+## 工作区入口
+
+如果你想看更完整的模块说明和命令入口，直接阅读 [`v2/README.md`](./v2/README.md)。
 
 ## 许可证
 

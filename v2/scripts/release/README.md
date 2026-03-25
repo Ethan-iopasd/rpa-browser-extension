@@ -1,9 +1,5 @@
 # Release Scripts
 
-For the recommended public GitHub release flow, also see:
-
-- [`v2/docs/GITHUB_RELEASE_GUIDE.md`](../../docs/GITHUB_RELEASE_GUIDE.md)
-
 ## Beta ZIP (Legacy)
 
 Build:
