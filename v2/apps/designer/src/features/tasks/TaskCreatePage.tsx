@@ -73,10 +73,6 @@ function formatDateTime(value: string | null | undefined): string {
   return date.toLocaleString("zh-CN", { hour12: false });
 }
 
-function formatWeekday(value: WeekdayName): string {
-  return WEEKDAY_OPTIONS.find(item => item.key === value)?.label ?? value;
-}
-
 export function TaskCreatePage(props: TaskCreatePageProps) {
   const { onCancel, onCreated } = props;
   const [panelError, setPanelError] = useState("");

@@ -859,6 +859,14 @@ export function NodePanel(props: NodePanelProps) {
     () => [...KATALON_TEMPLATES, ...customKatalonTemplates],
     [customKatalonTemplates]
   );
+  const effectiveKatalonTemplateId = useMemo(() => {
+    if (allKatalonTemplates.length === 0) {
+      return "";
+    }
+    return allKatalonTemplates.some(item => item.id === katalonTemplateId)
+      ? katalonTemplateId
+      : (allKatalonTemplates[0]?.id ?? "");
+  }, [allKatalonTemplates, katalonTemplateId]);
 
   // 上游节点输出变量列表，供参数面板的变量选择器使用
   const upstreamVars = useMemo(() => {
@@ -873,18 +881,41 @@ export function NodePanel(props: NodePanelProps) {
   useEffect(() => {
     saveCustomKatalonTemplates(customKatalonTemplates);
   }, [customKatalonTemplates]);
-
-  useEffect(() => {
-    if (allKatalonTemplates.length === 0) {
-      if (katalonTemplateId) {
-        setKatalonTemplateId("");
-      }
-      return;
+  const ifVariableSources = useMemo<IfVariableSource[]>(() => {
+    if (!flow || !selectedNode || selectedNode.type !== "if") {
+      return [];
     }
-    if (!allKatalonTemplates.some(item => item.id === katalonTemplateId)) {
-      setKatalonTemplateId(allKatalonTemplates[0]?.id ?? "");
+    const refs = collectIfVariableRefs(selectedNode.config);
+    if (refs.length === 0) {
+      return [];
     }
-  }, [allKatalonTemplates, katalonTemplateId]);
+    const upstreamIds = collectUpstreamNodeIds(flow, selectedNode.id);
+    const upstreamWriters = flow.nodes
+      .filter(candidate => upstreamIds.has(candidate.id))
+      .map(candidate => {
+        const producedVar = getNodeProducedVariable(candidate);
+        return producedVar
+          ? {
+            producedVar,
+            producer: {
+              nodeId: candidate.id,
+              nodeType: candidate.type,
+              label: candidate.label || getNodeTypeLabel(candidate.type)
+            } as VariableProducer
+          }
+          : null;
+      })
+      .filter((item): item is { producedVar: string; producer: VariableProducer } => item !== null);
+    const globalVariables = flow.variables ?? {};
+    return refs.map(name => ({
+      name,
+      fromGlobalDefault: Object.prototype.hasOwnProperty.call(globalVariables, name),
+      fromRuntimeInput: true,
+      fromUpstreamNodes: upstreamWriters
+        .filter(item => item.producedVar === name)
+        .map(item => item.producer)
+    }));
+  }, [flow, selectedNode]);
 
   if (!selectedNode) {
     return (
@@ -928,45 +959,10 @@ export function NodePanel(props: NodePanelProps) {
       ? (node.config.katalon as Record<string, unknown>)
       : null;
   const selectedKatalonTemplate =
-    allKatalonTemplates.find(item => item.id === katalonTemplateId) ?? allKatalonTemplates[0] ?? null;
+    allKatalonTemplates.find(item => item.id === effectiveKatalonTemplateId) ?? allKatalonTemplates[0] ?? null;
   const selectedIsBuiltIn = Boolean(
     selectedKatalonTemplate && KATALON_TEMPLATES.some(item => item.id === selectedKatalonTemplate.id)
   );
-  const ifVariableSources = useMemo<IfVariableSource[]>(() => {
-    if (!flow || node.type !== "if") {
-      return [];
-    }
-    const refs = collectIfVariableRefs(node.config);
-    if (refs.length === 0) {
-      return [];
-    }
-    const upstreamIds = collectUpstreamNodeIds(flow, node.id);
-    const upstreamWriters = flow.nodes
-      .filter(candidate => upstreamIds.has(candidate.id))
-      .map(candidate => {
-        const producedVar = getNodeProducedVariable(candidate);
-        return producedVar
-          ? {
-            producedVar,
-            producer: {
-              nodeId: candidate.id,
-              nodeType: candidate.type,
-              label: candidate.label || getNodeTypeLabel(candidate.type)
-            } as VariableProducer
-          }
-          : null;
-      })
-      .filter((item): item is { producedVar: string; producer: VariableProducer } => item !== null);
-    const globalVariables = flow.variables ?? {};
-    return refs.map(name => ({
-      name,
-      fromGlobalDefault: Object.prototype.hasOwnProperty.call(globalVariables, name),
-      fromRuntimeInput: true,
-      fromUpstreamNodes: upstreamWriters
-        .filter(item => item.producedVar === name)
-        .map(item => item.producer)
-    }));
-  }, [flow, node]);
 
   function applyConfigText() {
     try {

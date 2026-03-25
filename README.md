@@ -6,9 +6,9 @@
 [![License](https://img.shields.io/github/license/Ethan-iopasd/rpa-browser-extension)](./LICENSE)
 [![Repo stars](https://img.shields.io/github/stars/Ethan-iopasd/rpa-browser-extension?style=social)](https://github.com/Ethan-iopasd/rpa-browser-extension/stargazers)
 
-Open-source RPA workspace for recording, designing, executing, and packaging browser automation flows.
+Open-source, Windows-first local browser automation workspace for recording, designing, executing, and packaging browser flows.
 
-The main codebase lives in [`v2`](./v2). This repository combines a browser recorder extension, a React flow designer, a Python execution agent, a FastAPI control plane, and a Tauri desktop shell.
+The main codebase lives in [`v2`](./v2). This repository combines a browser recorder extension, a React flow designer, a Python execution agent, a FastAPI control plane, and a Tauri desktop shell. The first public desktop release target is `v0.1.0-beta.1` as a GitHub pre-release.
 
 ## At A Glance
 
@@ -22,8 +22,10 @@ The main codebase lives in [`v2`](./v2). This repository combines a browser reco
 ## Status
 
 - Experimental V2 workspace
-- Windows-first developer experience
-- Best suited for exploration, internal tooling, and further modernization
+- Experimental beta release
+- Windows-first desktop experience
+- Best suited for exploration, internal tooling, and browser automation validation
+- Recommended entry point: install the desktop app first; load the recorder extension only if you need recording
 
 ![img.png](img.png)
 
@@ -54,6 +56,8 @@ flowchart LR
 | `v2/scripts` | Build, release, and utility scripts |
 
 ## Local Startup
+
+If you want the fastest first-run experience, start from the GitHub desktop installer pre-release. Source setup below is best for development and debugging.
 
 ### 1. Install dependencies
 
@@ -94,6 +98,8 @@ rpa-agent --flow ..\..\packages\flow-schema\examples\minimal.flow.json
 1. Open `chrome://extensions/`
 2. Enable developer mode
 3. Load `v2/apps/recorder-extension` as an unpacked extension
+
+The recorder extension is optional. The desktop build can still run local flows and the native picker without it.
 
 ## Desktop Build
 
@@ -140,6 +146,7 @@ pnpm verify
 cd v2
 pnpm release:desktop:sidecar
 pnpm release:desktop
+pnpm pack:recorder-extension
 ```
 
 ### 3. Create and push a tag
@@ -147,16 +154,19 @@ pnpm release:desktop
 ```powershell
 git checkout main
 git pull --ff-only
-git tag -a v0.1.0 -m "v0.1.0"
+git tag -a v0.1.0-beta.1 -m "v0.1.0-beta.1"
 git push origin main --tags
 ```
 
-### 4. Publish the GitHub release
+### 4. Publish the GitHub pre-release
 
-Upload at least these assets:
+Use the notes in [`v2/releases/v0.1.0-beta.1.md`](./v2/releases/v0.1.0-beta.1.md) and upload these assets:
 
-- `RPA Flow Desktop_<version>_x64-setup.exe`
+- `RPA Flow Desktop_0.1.0-beta.1_x64-setup.exe`
 - `desktop-release-manifest.json`
+- `recorder-extension-<timestamp>.zip`
+
+Set the GitHub release as `pre-release` and do not mark it as the latest stable release.
 
 Recommended tag style:
 

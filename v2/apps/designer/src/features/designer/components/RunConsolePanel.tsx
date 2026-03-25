@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 
 import type { RunEvent } from "@rpa/flow-schema/generated/types";
 
@@ -58,24 +58,16 @@ export function RunConsolePanel(props: RunConsolePanelProps) {
 
   const hasValidationPass = Boolean(validationState && "valid" in validationState && validationState.valid);
   const failureHint = detectRunFailureHint(runEvents, runState, panelError);
-  const [eventPage, setEventPage] = useState(1);
+  const [eventPage, setEventPage] = useState({ page: 1, runEventTotal: 0 });
   const [eventPageSize, setEventPageSize] = useState(100);
   const eventTotal = runEvents.length;
   const eventTotalPages = Math.max(1, Math.ceil(eventTotal / eventPageSize));
+  const currentEventPage =
+    eventPage.runEventTotal === eventTotal ? Math.min(eventPage.page, eventTotalPages) : 1;
   const pagedEvents = useMemo(() => {
-    const offset = (eventPage - 1) * eventPageSize;
+    const offset = (currentEventPage - 1) * eventPageSize;
     return runEvents.slice(offset, offset + eventPageSize);
-  }, [eventPage, eventPageSize, runEvents]);
-
-  useEffect(() => {
-    if (eventPage > eventTotalPages) {
-      setEventPage(eventTotalPages);
-    }
-  }, [eventPage, eventTotalPages]);
-
-  useEffect(() => {
-    setEventPage(1);
-  }, [runEvents]);
+  }, [currentEventPage, eventPageSize, runEvents]);
 
   return (
     <div className="bg-white/95 backdrop-blur shadow-2xl shadow-slate-900/20 border border-slate-200 rounded-xl flex flex-col overflow-hidden">
@@ -261,7 +253,7 @@ export function RunConsolePanel(props: RunConsolePanelProps) {
           </div>
           <div className="border-t border-slate-200 bg-slate-50 px-3 py-2 flex items-center justify-between gap-3 text-xs">
             <div className="text-slate-600">
-              共 {eventTotal} 条，第 {eventPage} / {eventTotalPages} 页
+              共 {eventTotal} 条，第 {currentEventPage} / {eventTotalPages} 页
             </div>
             <div className="flex items-center gap-2">
               <label className="flex items-center gap-1.5 text-slate-600">
@@ -271,7 +263,7 @@ export function RunConsolePanel(props: RunConsolePanelProps) {
                   value={eventPageSize}
                   onChange={event => {
                     setEventPageSize(Number(event.target.value));
-                    setEventPage(1);
+                    setEventPage({ page: 1, runEventTotal: eventTotal });
                   }}
                 >
                   {PAGE_SIZE_OPTIONS.map(size => (
@@ -284,16 +276,26 @@ export function RunConsolePanel(props: RunConsolePanelProps) {
               <button
                 type="button"
                 className="px-2 py-1 rounded border border-slate-300 text-slate-700 disabled:opacity-50"
-                disabled={eventPage <= 1}
-                onClick={() => setEventPage(previous => Math.max(1, previous - 1))}
+                disabled={currentEventPage <= 1}
+                onClick={() =>
+                  setEventPage({
+                    page: Math.max(1, currentEventPage - 1),
+                    runEventTotal: eventTotal
+                  })
+                }
               >
                 上一页
               </button>
               <button
                 type="button"
                 className="px-2 py-1 rounded border border-slate-300 text-slate-700 disabled:opacity-50"
-                disabled={eventPage >= eventTotalPages}
-                onClick={() => setEventPage(previous => Math.min(eventTotalPages, previous + 1))}
+                disabled={currentEventPage >= eventTotalPages}
+                onClick={() =>
+                  setEventPage({
+                    page: Math.min(eventTotalPages, currentEventPage + 1),
+                    runEventTotal: eventTotal
+                  })
+                }
               >
                 下一页
               </button>

@@ -2610,7 +2610,7 @@ dependencies = [
 
 [[package]]
 name = "rpa_flow_desktop"
-version = "0.1.0"
+version = "0.1.0-beta.1"
 dependencies = [
  "serde",
  "serde_json",

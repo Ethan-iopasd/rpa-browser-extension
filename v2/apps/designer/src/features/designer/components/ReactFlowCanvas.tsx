@@ -14,7 +14,6 @@ import {
   ReactFlow,
   getBezierPath,
   type Connection,
-  type EdgeChange,
   type Edge as ReactFlowEdge,
   type EdgeProps,
   type NodeChange,
@@ -581,7 +580,7 @@ export function ReactFlowCanvas(props: ReactFlowCanvasProps) {
     [onUpdateNodePosition]
   );
 
-  const handleEdgesChange = useCallback((_changes: EdgeChange<DesignerFlowEdge>[]) => {
+  const handleEdgesChange = useCallback(() => {
     // Keep callback wired for controlled mode compatibility with React Flow internals.
   }, []);
 
@@ -709,7 +708,6 @@ export function ReactFlowCanvas(props: ReactFlowCanvasProps) {
 
   useEffect(() => {
     if (!instance) {
-      setViewportDebug(null);
       return;
     }
     const update = () => {
@@ -724,6 +722,7 @@ export function ReactFlowCanvas(props: ReactFlowCanvasProps) {
     const timer = window.setInterval(update, 500);
     return () => window.clearInterval(timer);
   }, [instance, flow.nodes.length, layoutFingerprint]);
+  const visibleViewportDebug = instance ? viewportDebug : null;
 
   return (
     <div ref={wrapperRef} className="flex-1 min-h-[420px] w-full bg-slate-50">
@@ -820,9 +819,9 @@ export function ReactFlowCanvas(props: ReactFlowCanvasProps) {
               x[{flowBoundsDebug.minX},{flowBoundsDebug.maxX}] y[{flowBoundsDebug.minY},{flowBoundsDebug.maxY}]
             </div>
           ) : null}
-          {viewportDebug ? (
+          {visibleViewportDebug ? (
             <div className="mt-1 rounded border border-slate-200 bg-white/95 px-2 py-1 text-[10px] font-mono text-slate-500">
-              view x={viewportDebug.x} y={viewportDebug.y} z={viewportDebug.zoom}
+              view x={visibleViewportDebug.x} y={visibleViewportDebug.y} z={visibleViewportDebug.zoom}
             </div>
           ) : null}
         </Panel>

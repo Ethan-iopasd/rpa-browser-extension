@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 
 import type { FlowModel } from "@rpa/flow-schema/generated/types";
 
@@ -34,34 +34,33 @@ export function DesignerPage(props: DesignerPageProps) {
     enableTaskCenter: showTaskCenter
   });
   const [showSettingsDrawer, setShowSettingsDrawer] = useState(false);
-  const [showNodeDrawer, setShowNodeDrawer] = useState(false);
+  const [nodeDrawerFlowId, setNodeDrawerFlowId] = useState("");
+  const [nodeDrawerOpen, setNodeDrawerOpen] = useState(false);
   const isDesktop = useMemo(() => isDesktopRuntime(), []);
   const extensionBridgeEnabled = !isDesktop;
   const extensionBridgeHint = "桌面端不支持浏览器扩展直连。请在浏览器中录制后导出 JSON，再回到桌面端导入。";
+  const showNodeDrawer = nodeDrawerOpen && nodeDrawerFlowId === state.flow.id;
 
   const selectedEdge = useMemo(
     () => state.flow.edges.find(edge => edge.id === state.selectedEdgeId) ?? null,
     [state.flow.edges, state.selectedEdgeId]
   );
 
-  useEffect(() => {
-    setShowNodeDrawer(false);
-  }, [state.flow.id]);
-
   function handleSelectNode(nodeId: string | null) {
     actions.selectNode(nodeId);
-    setShowNodeDrawer(Boolean(nodeId));
+    setNodeDrawerFlowId(state.flow.id);
+    setNodeDrawerOpen(Boolean(nodeId));
   }
 
   function handleSelectEdge(edgeId: string | null) {
     actions.selectEdge(edgeId);
     if (edgeId) {
-      setShowNodeDrawer(false);
+      setNodeDrawerOpen(false);
     }
   }
 
   function closeNodeDrawer() {
-    setShowNodeDrawer(false);
+    setNodeDrawerOpen(false);
     actions.selectNode(null);
   }
 

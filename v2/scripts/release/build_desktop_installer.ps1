@@ -55,7 +55,7 @@ try {
   if (-not $SkipChecks) {
     Invoke-Step "pnpm --filter @rpa/designer typecheck"
     Invoke-Step "pnpm --filter @rpa/desktop typecheck"
-    Invoke-Step "python scripts/python_syntax_check.py"
+    Invoke-Step "powershell -ExecutionPolicy Bypass -File .\scripts\run_python310.ps1 scripts/python_syntax_check.py"
     Push-Location (Join-Path $Root "apps\desktop\src-tauri")
     try {
       Invoke-Step "cargo check"
