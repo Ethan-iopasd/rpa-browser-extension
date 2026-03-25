@@ -112,9 +112,9 @@ Release artifacts are generated under `v2/dist/desktop/<version>/`.
 - [`v2/docs/NATIVE_DESKTOP_PICKER_IMPLEMENTATION_ZH.md`](./v2/docs/NATIVE_DESKTOP_PICKER_IMPLEMENTATION_ZH.md) - native picker implementation details
 - [`v2/docs/IFRAME_PICKER_OPEN_SOURCE_BENCHMARK_ZH.md`](./v2/docs/IFRAME_PICKER_OPEN_SOURCE_BENCHMARK_ZH.md) - iframe picker benchmark notes
 
-## Chinese Note
+## Documentation Language
 
-这是一个以 `v2` 工作区为核心的 RPA 平台仓库，不只是单独的浏览器扩展。当前最重要的模块包括流程设计器、执行代理、本地 API、桌面端，以及录制扩展。更完整的开发说明请直接查看 [`v2/README.md`](./v2/README.md)。
+Most deep-dive product and engineering documents in this repository are currently written in Chinese. If you want the most complete implementation notes, start with [`v2/README.md`](./v2/README.md) and the documents under [`v2/docs`](./v2/docs).
 
 ## License
 
