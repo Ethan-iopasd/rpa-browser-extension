@@ -1,0 +1,24 @@
+{
+  "name": "@rpa/desktop",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5174",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev:designer": "pnpm --filter @rpa/designer dev --host 127.0.0.1 --port 5173 --mode desktop",
+    "build:designer": "pnpm --filter @rpa/designer build --mode desktop",
+    "dev:tauri": "tauri dev",
+    "build:tauri": "tauri build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.8.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.8.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.5"
+  }
+}

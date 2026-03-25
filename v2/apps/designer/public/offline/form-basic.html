@@ -1,0 +1,63 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Basic</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "PingFang SC", sans-serif;
+        background: #f8fafc;
+      }
+      .wrap {
+        max-width: 640px;
+        margin: 30px auto;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 6px;
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 8px;
+      }
+      button {
+        margin-top: 12px;
+        border: 0;
+        border-radius: 8px;
+        background: #0ea5e9;
+        color: #fff;
+        padding: 9px 12px;
+      }
+      #echo {
+        margin-top: 12px;
+        color: #334155;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h2 id="title">Offline Form Demo</h2>
+      <label for="name">Name</label>
+      <input id="name" placeholder="input your name" />
+      <button id="submit" type="button">Submit</button>
+      <p id="echo">Echo: -</p>
+      <a href="/offline/index.html">返回目录</a>
+    </main>
+    <script>
+      const input = document.getElementById("name");
+      const echo = document.getElementById("echo");
+      document.getElementById("submit").addEventListener("click", () => {
+        echo.textContent = `Echo: ${input.value || "(empty)"}`;
+      });
+    </script>
+  </body>
+</html>

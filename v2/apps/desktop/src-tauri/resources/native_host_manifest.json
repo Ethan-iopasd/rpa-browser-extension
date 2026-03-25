@@ -1,0 +1,7 @@
+{
+  "name": "com.rpaflow.desktop.picker",
+  "description": "RPA Flow Desktop Native Picker Host",
+  "path": "__NATIVE_HOST_EXECUTABLE_PATH__",
+  "type": "stdio",
+  "allowed_origins": ["chrome-extension://__EXTENSION_ID__/"]
+}

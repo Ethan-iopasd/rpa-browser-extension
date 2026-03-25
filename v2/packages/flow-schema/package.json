@@ -1,0 +1,27 @@
+{
+  "name": "@rpa/flow-schema",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "node --check scripts/generate-types.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "generate:ts": "node scripts/generate-types.mjs",
+    "generate:py": "python scripts/generate_models.py",
+    "generate": "pnpm run generate:ts && pnpm run generate:py",
+    "check:sync": "node scripts/check-sync.mjs"
+  },
+  "exports": {
+    "./generated/types": "./generated/types.ts",
+    "./schema/flow.schema.json": "./schema/flow.schema.json",
+    "./examples/minimal.flow.json": "./examples/minimal.flow.json"
+  },
+  "files": [
+    "schema",
+    "examples",
+    "generated"
+  ],
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

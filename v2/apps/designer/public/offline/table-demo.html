@@ -1,0 +1,61 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table Demo</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "PingFang SC", sans-serif;
+        background: #f1f5f9;
+      }
+      .wrap {
+        max-width: 720px;
+        margin: 26px auto;
+        background: #fff;
+        border: 1px solid #dbeafe;
+        border-radius: 12px;
+        padding: 18px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #cbd5e1;
+        text-align: left;
+        padding: 8px;
+      }
+      thead {
+        background: #dbeafe;
+      }
+      .foot {
+        margin-top: 10px;
+        color: #334155;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h2 id="table-title">Offline Table Demo</h2>
+      <table id="orders">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>101</td><td>Alice</td><td>ready</td></tr>
+          <tr><td>102</td><td>Bob</td><td>running</td></tr>
+          <tr><td>103</td><td>Cathy</td><td>done</td></tr>
+        </tbody>
+      </table>
+      <p id="row-count" class="foot">Rows: 3</p>
+      <a href="/offline/index.html">返回目录</a>
+    </main>
+  </body>
+</html>

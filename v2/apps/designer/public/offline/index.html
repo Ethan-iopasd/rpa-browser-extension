@@ -1,0 +1,78 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline Pages</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "PingFang SC", sans-serif;
+        background: linear-gradient(160deg, #f8fafc, #eef2ff);
+        color: #0f172a;
+      }
+      .wrap {
+        max-width: 840px;
+        margin: 32px auto;
+        padding: 20px;
+      }
+      h1 {
+        margin: 0 0 8px;
+      }
+      p {
+        margin: 0 0 16px;
+        color: #475569;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+      a {
+        display: block;
+        text-decoration: none;
+        border: 1px solid #dbeafe;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 14px;
+        color: #1d4ed8;
+      }
+      a small {
+        display: block;
+        color: #64748b;
+        margin-top: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>离线自测页面集合</h1>
+      <p>用于本地真实浏览器链路验证，不依赖外网。</p>
+      <ul>
+        <li>
+          <a href="/offline/self-check.html">
+            1. 自检页（推荐）
+            <small>覆盖：导航、等待可见、点击、等待文本、提取。</small>
+          </a>
+        </li>
+        <li>
+          <a href="/offline/form-basic.html">
+            2. 表单页
+            <small>覆盖：输入、点击、断言文本。</small>
+          </a>
+        </li>
+        <li>
+          <a href="/offline/table-demo.html">
+            3. 表格页
+            <small>覆盖：提取、计数、表格提取。</small>
+          </a>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

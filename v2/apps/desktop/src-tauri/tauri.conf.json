@@ -1,0 +1,29 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "RPA Flow Desktop",
+  "version": "0.1.0",
+  "identifier": "com.rpaflow.desktop",
+  "build": {
+    "beforeDevCommand": "pnpm --filter @rpa/desktop dev:designer",
+    "beforeBuildCommand": "pnpm --filter @rpa/desktop build:designer",
+    "devUrl": "http://127.0.0.1:5173",
+    "frontendDist": "../../designer/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "RPA Flow Desktop",
+        "width": 1200,
+        "height": 800,
+        "resizable": true
+      }
+    ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": "nsis",
+    "icon": ["icons/icon.ico"],
+    "externalBin": ["bin/rpa-api-sidecar", "bin/rpa-native-picker-host"],
+    "resources": ["../../../.playwright-browsers"]
+  }
+}

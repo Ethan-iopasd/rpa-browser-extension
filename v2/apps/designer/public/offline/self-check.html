@@ -1,0 +1,116 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Self Check</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "PingFang SC", sans-serif;
+        background: radial-gradient(circle at top, #dbeafe, #f8fafc 65%);
+        color: #0f172a;
+      }
+      .card {
+        width: min(760px, calc(100vw - 40px));
+        margin: 28px auto;
+        border: 1px solid #dbeafe;
+        border-radius: 14px;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+      }
+      h1 {
+        margin: 0 0 10px;
+        font-size: 24px;
+      }
+      .meta {
+        margin: 6px 0;
+        color: #334155;
+      }
+      .status-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .pill {
+        border: 1px solid #cbd5e1;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 13px;
+      }
+      #status.pass {
+        border-color: #16a34a;
+        color: #166534;
+        background: #ecfdf3;
+      }
+      #status.fail {
+        border-color: #ef4444;
+        color: #991b1b;
+        background: #fef2f2;
+      }
+      button {
+        margin-top: 16px;
+        border: 0;
+        border-radius: 10px;
+        padding: 10px 16px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      #result {
+        margin-top: 16px;
+        border: 1px dashed #cbd5e1;
+        border-radius: 10px;
+        background: #f8fafc;
+        padding: 10px;
+        min-height: 20px;
+        font-family: "Consolas", monospace;
+      }
+      .links {
+        margin-top: 16px;
+      }
+      .links a {
+        color: #1d4ed8;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>Browser Self Check</h1>
+      <p class="meta" id="ready">READY</p>
+      <div class="status-row">
+        <span class="pill" id="status">PENDING</span>
+        <span class="pill" id="version">v1</span>
+      </div>
+      <button id="run-btn" type="button">Run Self Check</button>
+      <div id="result">Waiting...</div>
+      <div class="links">
+        <a href="/offline/index.html">返回离线页面目录</a>
+      </div>
+    </main>
+
+    <script>
+      const ready = document.getElementById("ready");
+      const statusEl = document.getElementById("status");
+      const resultEl = document.getElementById("result");
+      const runBtn = document.getElementById("run-btn");
+
+      ready.textContent = `READY @ ${new Date().toLocaleTimeString("zh-CN", { hour12: false })}`;
+
+      runBtn.addEventListener("click", () => {
+        statusEl.textContent = "RUNNING";
+        statusEl.className = "pill";
+        resultEl.textContent = "Running checks...";
+
+        setTimeout(() => {
+          statusEl.textContent = "PASS";
+          statusEl.className = "pill pass";
+          resultEl.textContent = `PASS|${Date.now()}|offline-self-check`;
+        }, 260);
+      });
+    </script>
+  </body>
+</html>

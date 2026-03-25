@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "description": "Selector generation rules for dynamic and complex pages.",
+  "preferredAttributes": [
+    "data-testid",
+    "data-test-id",
+    "data-test",
+    "data-qa",
+    "data-cy",
+    "sign",
+    "name",
+    "aria-label",
+    "title",
+    "placeholder"
+  ],
+  "textFriendlyTags": ["button", "a", "label", "span", "div", "p", "td", "th"],
+  "dynamicTokenPatterns": [
+    { "pattern": "\\d{6,}" },
+    { "pattern": "[a-z][-_]?\\d{5,}", "flags": "i" },
+    { "pattern": "^\\d+(\\.\\d+)?$" },
+    { "pattern": "^[a-f0-9]{16,}$", "flags": "i" },
+    {
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$",
+      "flags": "i"
+    }
+  ],
+  "dynamicClassPatterns": [
+    { "pattern": "\\d{3,}", "flags": "i" },
+    { "pattern": "__[a-z0-9]{5,}", "flags": "i" },
+    { "pattern": "^(css|ng|ember|react|vue)-[a-z0-9]{5,}$", "flags": "i" }
+  ],
+  "dynamicTextPatterns": [
+    { "pattern": "\\b\\d{1,2}:\\d{2}(?::\\d{2})?\\b" },
+    { "pattern": "\\b20\\d{2}[./-]\\d{1,2}[./-]\\d{1,2}\\b" },
+    { "pattern": "\\b\\d{4}年\\d{1,2}月\\d{1,2}日\\b" },
+    { "pattern": "\\b(mon|tue|wed|thu|fri|sat|sun|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\\b", "flags": "i" }
+  ],
+  "noisySelectorPatterns": [
+    { "pattern": "nth-of-type\\(", "flags": "i" },
+    { "pattern": "\\b(css|ng|ember|react|vue)-[a-z0-9]{5,}\\b", "flags": "i" }
+  ],
+  "maxTextCandidateLength": 48,
+  "maxStableTextLength": 80,
+  "maxTextTokenCount": 10,
+  "maxAccessibleNameLength": 42,
+  "maxCandidates": 10
+}

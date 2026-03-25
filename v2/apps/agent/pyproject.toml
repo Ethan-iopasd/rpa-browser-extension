@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rpa-flow-agent"
+version = "0.1.0"
+description = "Execution agent stub for RPA Flow V2"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+  "pydantic>=2.10.0",
+  "playwright>=1.52.0"
+]
+
+[project.scripts]
+rpa-agent = "agent.main:main"
+
+[project.optional-dependencies]
+dev = [
+  "ruff>=0.13.0",
+  "black>=25.1.0",
+  "mypy>=1.18.0"
+]
+
+[tool.setuptools.packages.find]
+include = ["agent*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["agent"]

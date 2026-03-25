@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RPA Recorder</title>
+    <style>
+      body {
+        width: 400px;
+        margin: 0;
+        padding: 12px;
+        font-family: "Segoe UI", sans-serif;
+      }
+      h1 {
+        font-size: 16px;
+        margin: 0 0 10px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      button {
+        border: 1px solid #d0d7de;
+        background: #f6f8fa;
+        border-radius: 6px;
+        padding: 6px 10px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #eef2f7;
+      }
+      #status {
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      #events {
+        max-height: 260px;
+        overflow: auto;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        padding: 8px;
+        background: #fff;
+      }
+      #tip {
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: #4b5563;
+      }
+      .event {
+        border-bottom: 1px solid #eee;
+        padding: 6px 0;
+        font-size: 12px;
+      }
+      .event:last-child {
+        border-bottom: none;
+      }
+      code {
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>RPA Flow Recorder</h1>
+    <div id="status">Loading...</div>
+    <div id="tip">打开 Designer 页签后可点击「Send to Designer」直接回填。</div>
+    <div class="row">
+      <button id="startBtn">Start</button>
+      <button id="stopBtn">Stop</button>
+      <button id="clearBtn">Clear</button>
+      <button id="exportBtn">Export</button>
+      <button id="copyBtn">Copy Payload</button>
+      <button id="pushBtn">Send to Designer</button>
+    </div>
+    <div id="events"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>

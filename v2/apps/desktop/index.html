@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RPA Flow Desktop</title>
+  </head>
+  <body>
+    <main class="container">
+      <h1>RPA Flow Desktop</h1>
+      <p>阶段 1：桌面壳最小骨架</p>
+      <div class="panel">
+        <div><strong>API 状态：</strong><span id="api-status">unknown</span></div>
+        <div><strong>Agent 状态：</strong><span id="agent-status">unknown</span></div>
+        <div><strong>信息：</strong><span id="status-message">-</span></div>
+      </div>
+      <div class="actions">
+        <button id="start-services" type="button">启动本地服务</button>
+        <button id="refresh-status" type="button">刷新状态</button>
+      </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

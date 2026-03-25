@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "description": "Frame selection rules for nested iframe environments.",
+  "preferredAttributes": [
+    "id",
+    "name",
+    "data-testid",
+    "data-test",
+    "data-qa",
+    "data-cy",
+    "title",
+    "aria-label",
+    "src",
+    "frameborder"
+  ],
+  "dynamicIdPatterns": [
+    { "pattern": "\\d{6,}" },
+    { "pattern": "[a-z][-_]?\\d{5,}", "flags": "i" },
+    { "pattern": "^\\d+(\\.\\d+)?$" },
+    { "pattern": "^[a-f0-9]{16,}$", "flags": "i" },
+    { "pattern": "(?:^|[-_])iframe[-_]?[a-z0-9_-]*\\d+(?:\\.\\d+)?$", "flags": "i" },
+    { "pattern": "^x-[a-z0-9_-]*iframe[a-z0-9_-]*\\d+(?:\\.\\d+)?$", "flags": "i" },
+    { "pattern": "^frame[a-z]{1,8}\\d+$", "flags": "i" },
+    {
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$",
+      "flags": "i"
+    }
+  ],
+  "dynamicQueryKeys": [
+    "mgid",
+    "wdaid",
+    "_",
+    "t",
+    "ts",
+    "timestamp",
+    "nonce",
+    "token",
+    "rand",
+    "random",
+    "traceid",
+    "session",
+    "sid",
+    "pkid",
+    "cd",
+    "cf"
+  ],
+  "stableQueryAllowlist": ["product"],
+  "maxQueryParams": 2,
+  "maxParamValueLength": 96,
+  "maxSrcFragmentLength": 220,
+  "attributeScoreOverrides": {
+    "data-testid": 0.97,
+    "data-test": 0.95,
+    "data-qa": 0.94,
+    "data-cy": 0.94,
+    "title": 0.88,
+    "aria-label": 0.88
+  },
+  "maxCandidates": 10
+}

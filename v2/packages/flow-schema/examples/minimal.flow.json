@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "flow_demo_001",
+  "name": "Open and wait",
+  "variables": {
+    "targetUrl": "https://example.com"
+  },
+  "nodes": [
+    {
+      "id": "n_start",
+      "type": "start",
+      "label": "Start",
+      "config": {}
+    },
+    {
+      "id": "n_nav",
+      "type": "navigate",
+      "label": "Open page",
+      "config": {
+        "url": "{{targetUrl}}"
+      }
+    },
+    {
+      "id": "n_wait",
+      "type": "wait",
+      "label": "Wait",
+      "config": {
+        "ms": 1000
+      }
+    },
+    {
+      "id": "n_end",
+      "type": "end",
+      "label": "End",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "n_start",
+      "target": "n_nav"
+    },
+    {
+      "id": "e2",
+      "source": "n_nav",
+      "target": "n_wait"
+    },
+    {
+      "id": "e3",
+      "source": "n_wait",
+      "target": "n_end"
+    }
+  ]
+}

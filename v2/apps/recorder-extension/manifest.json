@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "RPA Flow Recorder",
+  "version": "0.1.0",
+  "description": "Capture browser interactions for RPA node generation.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxu2q4yujKg+LSfKvYnKxWrnBTK0FWrl/HVmJ04gevC0klnLOdHSbqb1amSZU6aj7uJRP6Q65iU/LZmQBt4yX/N3QMVMn/ojpO92s6k4rOWRQzOfSIYgmZWGtJ6aALDGjVF4VMoMERQRKDhL+zWs9MtgsH/rGyYeTDfOYmhOv+YyzQezDKrwAxmFatG8+8FSixFCbO0/HmXCmWjW3AfFRQrSQmto/xzHmFGqjCjFdosXHassK2Z6MFrXaBQRSuQy/OOlQRtyfmPNJYdNCu16BcDpkIn/+m1M4YG1xbf0JO8E0qxortymXCHPXQ5d6n78qP6HW5sN5TEvz7iMvxsS9BQIDAQAB",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["activeTab", "tabs", "storage", "scripting", "nativeMessaging", "alarms"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ]
+}

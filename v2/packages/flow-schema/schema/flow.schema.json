@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpa-flow.local/schemas/flow.schema.json",
+  "title": "RPA Flow DSL",
+  "type": "object",
+  "required": ["schemaVersion", "id", "name", "nodes", "edges"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "variables": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean", "null"]
+      },
+      "default": {}
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    }
+  },
+  "$defs": {
+    "nodeType": {
+      "type": "string",
+      "enum": [
+        "start",
+        "end",
+        "navigate",
+        "click",
+        "input",
+        "wait",
+        "extract",
+        "if",
+        "loop",
+        "hover",
+        "scroll",
+        "select",
+        "upload",
+        "pressKey",
+        "doubleClick",
+        "rightClick",
+        "switchFrame",
+        "switchTab",
+        "screenshot",
+        "assertText",
+        "assertVisible",
+        "assertUrl",
+        "assertCount",
+        "setVariable",
+        "templateRender",
+        "jsonParse",
+        "regexExtract",
+        "tableExtract",
+        "rowLocate",
+        "waitForVisible",
+        "waitForClickable",
+        "waitForNetworkIdle",
+        "waitForText",
+        "tryCatch",
+        "switchCase",
+        "parallel",
+        "break",
+        "continue",
+        "httpRequest",
+        "webhook",
+        "dbQuery",
+        "notify",
+        "subflow"
+      ]
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "type", "config"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "$ref": "#/$defs/nodeType"
+        },
+        "label": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "edge": {
+      "type": "object",
+      "required": ["id", "source", "target"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "condition": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

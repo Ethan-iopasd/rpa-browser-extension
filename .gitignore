@@ -1,0 +1,55 @@
+# Root-level ignores
+/main.py
+/uv.lock
+/flash-ui-canvas.zip
+node_modules
+**/node_modules
+dist
+**/dist
+*.log
+.DS_Store
+.idea
+.pytest_cache
+.mypy_cache
+.pnpm-store
+.uv-cache
+.runtime
+.tmp
+.test_runtime
+.test_runtime_smoke
+build
+*.egg-info
+
+# Python
+**/__pycache__
+*.pyc
+.venv
+.venv310
+.venv-sidecar
+
+# V2 workspace
+v2/node_modules
+v2/dist
+v2/services/api/.runtime
+v2/apps/agent/build
+v2/apps/designer/.vite
+v2/apps/designer/dist
+v2/apps/desktop/dist
+v2/apps/desktop/src-tauri/target
+
+# Desktop sidecar build artifacts
+v2/.venv-sidecar
+v2/.sidecar-build
+v2/.pnpm-store
+v2/.pytest_cache
+v2/.test_runtime
+v2/.test_runtime_smoke
+v2/.tmp
+v2/.uv-cache
+v2/.venv310
+v2/*.egg-info
+v2/.playwright-browsers/*
+!v2/.playwright-browsers/.gitkeep
+v2/apps/desktop/src-tauri/bin/*
+!v2/apps/desktop/src-tauri/bin/.gitkeep
+v2/.sidecar-temp
