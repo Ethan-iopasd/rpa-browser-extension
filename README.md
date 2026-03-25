@@ -26,6 +26,8 @@ The main codebase lives in [`v2`](./v2). This repository combines a browser reco
 - Primary long-form docs are currently in Chinese
 - Best suited for exploration, internal tooling, and further modernization
 
+![img.png](img.png)
+
 ## Architecture
 
 ```mermaid
