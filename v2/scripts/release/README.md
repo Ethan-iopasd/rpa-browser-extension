@@ -1,5 +1,9 @@
 # Release Scripts
 
+For the recommended public GitHub release flow, also see:
+
+- [`v2/docs/GITHUB_RELEASE_GUIDE.md`](../../docs/GITHUB_RELEASE_GUIDE.md)
+
 ## Beta ZIP (Legacy)
 
 Build:
@@ -55,3 +59,15 @@ Output:
 
 1. Installer artifacts: `dist\desktop\<version>\bundle`
 2. Manifest with checksums: `dist\desktop\<version>\desktop-release-manifest.json`
+
+## Suggested GitHub Release Assets
+
+When publishing an open-source GitHub release, upload:
+
+1. `RPA Flow Desktop_<version>_x64-setup.exe`
+2. `desktop-release-manifest.json`
+
+Recommended Git tag format:
+
+1. Stable: `vX.Y.Z`
+2. Pre-release: `vX.Y.Z-beta.N`
